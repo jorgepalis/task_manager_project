@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de la Tarea</title>
+    <link rel="stylesheet" href="{% static 'task_manager/css/style.css' %}">
+</head>
+<body>
+    {% extends 'task_manager/base.html' %}
+
+    {% block content %}
+    <h1>{{ task.title }}</h1>
+    <p><strong>Descripción:</strong> {{ task.description }}</p>
+    <p><strong>Estado:</strong> {{ task.completed|yesno:"Completada,no completada" }}</p>
+    <p><strong>Fecha de creación:</strong> {{ task.created_at }}</p>
+    <p><strong>Fecha de vencimiento:</strong> {{ task.due_date }}</p>
+    <p><strong>Ciudad:</strong> {{ task.city }}</p>
+
+    <h2>Clima Actual en {{ task.city }}</h2>
+    <div id="weather-info">
+        <!-- Aquí se mostrará la información del clima -->
+    </div>
+
+    <a href="{% url 'task_manager:task_list' %}">Volver a la lista de tareas</a>
+    {% endblock %}
+</body>
+</html>
