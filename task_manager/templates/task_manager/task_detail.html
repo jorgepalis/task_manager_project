@@ -1,28 +1,42 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalles de la Tarea</title>
-    <link rel="stylesheet" href="{% static 'task_manager/css/style.css' %}">
-</head>
-<body>
-    {% extends 'task_manager/base.html' %}
+{% extends 'task_manager/base.html' %}
+{% load static %}
+{% block title %}{{ task.title }}{% endblock %}
 
-    {% block content %}
+{% block extra_head %}
+    <script src="{% static 'task_manager/js/weather.js' %}"></script>
+{% endblock %}
+
+
+
+{% block content %}
     <h1>{{ task.title }}</h1>
     <p><strong>Descripción:</strong> {{ task.description }}</p>
     <p><strong>Estado:</strong> {{ task.completed|yesno:"Completada,no completada" }}</p>
     <p><strong>Fecha de creación:</strong> {{ task.created_at }}</p>
-    <p><strong>Fecha de vencimiento:</strong> {{ task.due_date }}</p>
+    <p><strong>Fecha de vencimiento:</strong> {% if task.due_date %}{{ task.due_date }}{% else %}Sin fecha de vencimiento{% endif %}</p>
     <p><strong>Ciudad:</strong> {{ task.city }}</p>
+
+    <tr>
+        <td>
+            <form method="POST" action="{% url 'task_manager:mark_task_completed' task.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Completar</button>
+            </form>
+            <a href="{% url 'task_manager:edit_task' task.id %}">Editar</a>
+            <a href="{% url 'task_manager:delete_task' task.id %}">Eliminar</a>
+        </td>
+    </tr>
 
     <h2>Clima Actual en {{ task.city }}</h2>
     <div id="weather-info">
-        <!-- Aquí se mostrará la información del clima -->
+        {% if error %}
+            {{ error }}
+        {% else %}
+            <p>temperatura {{climate.temperatura}}</p>
+            <p>humedad {{climate.humedad}}</p>
+            <p>descripción {{climate.descripcion}}</p>
+        {% endif %}
     </div>
 
     <a href="{% url 'task_manager:task_list' %}">Volver a la lista de tareas</a>
-    {% endblock %}
-</body>
-</html>
+{% endblock %}

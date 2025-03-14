@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmar Eliminación</title>
-    <link rel="stylesheet" href="{% static 'task_manager/css/style.css' %}">
-</head>
+{% load static %}
 <body>
     <div class="container">
         <h1>Confirmar Eliminación</h1>
@@ -13,8 +6,7 @@
         <form method="POST">
             {% csrf_token %}
             <button type="submit">Eliminar</button>
-            <a href="{% url 'task_list' %}">Cancelar</a>
+            <a href="{% url 'task_manager:task_list' %}">Cancelar</a>
         </form>
     </div>
 </body>
-</html>

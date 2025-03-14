@@ -1,54 +1,67 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Tareas</title>
-    <link rel="stylesheet" href="{% static 'task_manager/css/style.css' %}">
-</head>
-<body>
-    {% extends 'task_manager/base.html' %}
+{% extends 'task_manager/base.html' %}
+{% load static %}
+<title>{% block title %} Lista de tareas {% endblock %}</title>
+{% block content %}
+<h1>Lista de Tareas</h1>
 
-    {% block content %}
-    <h1>Lista de Tareas</h1>
-
+<!-- Formulario de filtrado -->
+<div class="filters">
     <form method="GET" action="{% url 'task_manager:task_list' %}">
-        <input type="text" name="search" placeholder="Buscar tareas..." value="{{ request.GET.search }}">
-        <button type="submit">Buscar</button>
+        <label>Filtrar por estado:</label>
+        <select name="completed" onchange="this.form.submit()">
+            <option value="all" {% if completed_filter == 'all' or completed_filter is None or completed_filter == '' %}selected{% endif %}>Todas</option>
+            <option value="true" {% if completed_filter == 'true' %}selected{% endif %}>Completadas</option>
+            <option value="false" {% if completed_filter == 'false' %}selected{% endif %}>Pendientes</option>
+        </select>
+        
+        {% if search_query %}
+            <input type="hidden" name="search" value="{{ search_query }}">
+        {% endif %}
     </form>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Título</th>
-                <th>Descripción</th>
-                <th>Completada</th>
-                <th>Fecha de Creación</th>
-                <th>Fecha de Vencimiento</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for task in tasks %}
-            <tr>
-                <td>{{ task.title }}</td>
-                <td>{{ task.description }}</td>
-                <td>{{ task.completed|yesno:"Sí,No" }}</td>
-                <td>{{ task.created_at }}</td>
-                <td>{{ task.due_date }}</td>
-                <td>
-                    <a href="{% url 'task_manager:task_detail' task.id %}">Detalles</a>
-                    <a href="{% url 'task_manager:task_edit' task.id %}">Editar</a>
-                    <a href="{% url 'task_manager:task_confirm_delete' task.id %}">Eliminar</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="6">No hay tareas disponibles.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% endblock %}
-</body>
-</html>
+    <!-- Mantén tu formulario de búsqueda existente -->
+    <form method="GET" action="{% url 'task_manager:task_list' %}">
+        <input type="text" name="search" placeholder="Buscar tareas..." value="{{ search_query }}">
+        {% if completed_filter is not None %}
+            <input type="hidden" name="completed" value="{{ completed_filter }}">
+        {% endif %}
+        <button type="submit">Buscar</button>
+    </form>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Completada</th>
+            <th>Fecha de Creación</th>
+            <th>Fecha de Vencimiento</th>
+            <th>Ciudad</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.title }}</td>
+            <td>{{ task.completed|yesno:"Sí,No" }}</td>
+            <td>{{ task.created_at }}</td>
+            {% if task.due_date %}
+            <td>{{ task.due_date }}</td>
+            {% else %}
+            <td>Sin fecha de vencimiento</td>
+            {% endif %}
+            <td>{{ task.city }}</td>
+            <td>                  
+                <a href="{% url 'task_manager:task_detail' task.id %}">Detalles</a>
+
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No hay tareas disponibles.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

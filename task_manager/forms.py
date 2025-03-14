@@ -1,17 +1,17 @@
 from django import forms
 from .models import Task
+from django.utils import timezone
 
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'description', 'completed', 'due_date', 'city']
+        fields = ['title', 'description', 'due_date', 'city']
         widgets = {
             'due_date': forms.DateInput(attrs={'type': 'date'}),
         }
         labels = {
             'title': 'Título',
             'description': 'Descripción',
-            'completed': 'Completado',
             'due_date': 'Fecha de vencimiento',
             'city': 'Ciudad',
         }

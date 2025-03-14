@@ -12,8 +12,7 @@ Este proyecto es un sistema de gestión de tareas desarrollado con Django. Permi
 
 1. Clona el repositorio:
    ```
-   git clone <URL_DEL_REPOSITORIO>
-   cd task_manager_project
+   git clone https://github.com/jorgepalis/task_manager_project.git
    ```
 
 2. Crea un entorno virtual y actívalo:
@@ -44,6 +43,33 @@ Este proyecto es un sistema de gestión de tareas desarrollado con Django. Permi
 - `.gitignore`: Archivos y directorios que deben ser ignorados por Git.
 - `task_manager_project/`: Configuración del proyecto Django.
 - `task_manager/`: Aplicación principal para la gestión de tareas.
+
+## Tests
+
+El proyecto incluye una serie de tests para asegurar la calidad y el correcto funcionamiento de las diferentes funcionalidades:
+
+### Tests de Modelos y Formularios
+- **Creación de tareas**: Verifica que una tarea no pueda ser creada con un título vacío.
+- **Validación de datos**: Comprueba que los campos obligatorios estén presentes y con el formato correcto.
+
+### Tests de Funcionalidades
+- **Cambio de estado "completed"**: Verifica que una tarea pueda ser marcada como completada correctamente.
+- **Filtrado de tareas**: Asegura que el filtrado por estado funciona según lo esperado.
+
+### Tests de Integración con API Externa
+- **Consumo de API del clima**: Utiliza `unittest.mock` para simular respuestas de la API externa y verificar el correcto procesamiento de los datos del clima.
+- **Manejo de errores**: Comprueba que la aplicación maneja adecuadamente los casos de error en la API externa.
+
+### Ejecución de Tests
+
+Para ejecutar todos los tests del proyecto:
+```
+python manage.py test task_manager
+```
+
+Para ejecutar un test específico:
+```
+python manage.py test task_manager.tests.TaskModelTest
 
 ## Contribuciones
 
