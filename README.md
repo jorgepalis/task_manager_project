@@ -1,6 +1,13 @@
 # Task Manager Project
 
-Este proyecto es un sistema de gestión de tareas desarrollado con Django. Permite a los usuarios crear, editar, eliminar y visualizar tareas, así como marcar tareas como completadas. Además, incluye la funcionalidad de mostrar el clima actual de la ciudad asociada a cada tarea.
+## Demostración en línea
+
+Puedes visitar la aplicación desplegada en: **[https://task-manager-project-d8xv.onrender.com/](https://task-manager-project-d8xv.onrender.com/)**
+
+### Acceso al panel de administración
+- URL: [https://task-manager-project-d8xv.onrender.com/admin/](https://task-manager-project-d8xv.onrender.com/admin/)
+- Usuario: `admin`
+- Contraseña: `Adpruebatask90`
 
 ## Requisitos
 
