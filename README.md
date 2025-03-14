@@ -26,12 +26,21 @@ Este proyecto es un sistema de gestión de tareas desarrollado con Django. Permi
    pip install -r requirements.txt
    ```
 
-4. Realiza las migraciones de la base de datos:
+4. **Configura la API del clima**:
+- Regístrate en [OpenWeatherMap](https://openweathermap.org/) para obtener una API key gratuita
+- Crea un archivo `.env` en el directorio raíz del proyecto
+- Añade tu API key en el archivo como se muestra a continuación:
+```
+API_KEY=tu_api_key_aqui
+```
+- Nota: La API key puede tardar unas horas en activarse después del registro
+
+5. Realiza las migraciones de la base de datos:
    ```
    python manage.py migrate
    ```
 
-5. Ejecuta el servidor de desarrollo:
+6. Ejecuta el servidor de desarrollo:
    ```
    python manage.py runserver
    ```
