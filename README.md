@@ -66,10 +66,10 @@ Para ejecutar todos los tests del proyecto:
 ```
 python manage.py test task_manager
 ```
-
 Para ejecutar un test específico:
 ```
 python manage.py test task_manager.tests.TaskModelTest
+```
 
 ## Contribuciones
 
