@@ -1,14 +1,19 @@
 {% extends 'task_manager/base.html' %}
-
-<title>{% block title %}Formulario de Tarea{% endblock %}</title>
 {% load static %}
 
+{% block title %}{% if task %}Editar Tarea{% else %}Crear Tarea{% endif %}{% endblock %}
+
 {% block content %}
-<h1>{% if task %}Editar Tarea{% else %}Crear Tarea{% endif %}</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">{% if task %}Actualizar{% else %}Crear{% endif %}</button>
-</form>
-<a href="{% url 'task_manager:task_list' %}">Volver a la lista de tareas</a>
+<div class="container">
+    <h1>{% if task %}Editar Tarea{% else %}Crear Tarea{% endif %}</h1>
+    
+    <form method="post" class="task-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="action-buttons">
+            <button type="submit">{% if task %}Actualizar{% else %}Crear{% endif %}</button>
+            <a href="{% url 'task_manager:task_list' %}" class="btn">Cancelar</a>
+        </div>
+    </form>
+</div>
 {% endblock %}

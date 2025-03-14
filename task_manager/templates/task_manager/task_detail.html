@@ -2,41 +2,40 @@
 {% load static %}
 {% block title %}{{ task.title }}{% endblock %}
 
-{% block extra_head %}
-    <script src="{% static 'task_manager/js/weather.js' %}"></script>
-{% endblock %}
-
-
-
 {% block content %}
+<div class="container">
     <h1>{{ task.title }}</h1>
-    <p><strong>Descripción:</strong> {{ task.description }}</p>
-    <p><strong>Estado:</strong> {{ task.completed|yesno:"Completada,no completada" }}</p>
-    <p><strong>Fecha de creación:</strong> {{ task.created_at }}</p>
-    <p><strong>Fecha de vencimiento:</strong> {% if task.due_date %}{{ task.due_date }}{% else %}Sin fecha de vencimiento{% endif %}</p>
-    <p><strong>Ciudad:</strong> {{ task.city }}</p>
+    
+    <div class="task-details">
+        <p><strong>Descripción:</strong> {{ task.description }}</p>
+        <p><strong>Estado:</strong> {{ task.completed|yesno:"Completada,No completada" }}</p>
+        <p><strong>Fecha de creación:</strong> {{ task.created_at }}</p>
+        <p><strong>Fecha de vencimiento:</strong> {% if task.due_date %}{{ task.due_date }}{% else %}Sin fecha de vencimiento{% endif %}</p>
+        <p><strong>Ciudad:</strong> {{ task.city }}</p>
+    </div>
 
-    <tr>
-        <td>
-            <form method="POST" action="{% url 'task_manager:mark_task_completed' task.id %}" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit">Completar</button>
-            </form>
-            <a href="{% url 'task_manager:edit_task' task.id %}">Editar</a>
-            <a href="{% url 'task_manager:delete_task' task.id %}">Eliminar</a>
-        </td>
-    </tr>
+    <div class="action-buttons">
+        <form method="POST" action="{% url 'task_manager:mark_task_completed' task.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn">
+                {% if task.completed %}Pendiente{% else %}Completar{% endif %}
+            </button>
+        </form>
+        <a href="{% url 'task_manager:edit_task' task.id %}" class="btn">Editar</a>
+        <a href="{% url 'task_manager:delete_task' task.id %}" class="btn-delete">Eliminar</a>
+    </div>
 
-    <h2>Clima Actual en {{ task.city }}</h2>
-    <div id="weather-info">
+    <div class="weather-info">
+        <h2>Clima Actual en {{ task.city }}</h2>
         {% if error %}
-            {{ error }}
+            <p class="error">{{ error }}</p>
         {% else %}
-            <p>temperatura {{climate.temperatura}}</p>
-            <p>humedad {{climate.humedad}}</p>
-            <p>descripción {{climate.descripcion}}</p>
+            <p><strong>Temperatura:</strong> {{climate.temperatura}}</p>
+            <p><strong>Humedad:</strong> {{climate.humedad}}</p>
+            <p><strong>Descripción:</strong> {{climate.descripcion}}</p>
         {% endif %}
     </div>
 
-    <a href="{% url 'task_manager:task_list' %}">Volver a la lista de tareas</a>
+    <a href="{% url 'task_manager:task_list' %}" class="btn">Volver a la lista</a>
+</div>
 {% endblock %}

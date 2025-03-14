@@ -44,6 +44,35 @@ Este proyecto es un sistema de gestión de tareas desarrollado con Django. Permi
 - `task_manager_project/`: Configuración del proyecto Django.
 - `task_manager/`: Aplicación principal para la gestión de tareas.
 
+## Panel de Administración
+
+El proyecto incluye un panel de administración completo para gestionar las tareas de forma eficiente.
+
+### Acceso al Panel de Admin
+
+1. **Crear un superusuario** (administrador):
+   ```
+   python manage.py createsuperuser
+   ```
+   Sigue las instrucciones para crear un nombre de usuario, correo electrónico y contraseña.
+
+2. **Acceder al panel**:
+- Inicia el servidor: `python manage.py runserver`
+- Visita: `http://127.0.0.1:8000/admin/`
+- Introduce las credenciales del superusuario
+
+### Funcionalidades del Panel
+
+En el panel de administración podrás:
+
+- **Ver todas las tareas** con sus detalles
+- **Filtrar tareas** por estado de completado
+- **Buscar tareas** por título
+
+### Personalización
+
+La interfaz de administración ha sido personalizada para facilitar la gestión de tareas, mostrando los campos más relevantes y proporcionando filtros útiles para trabajar con grandes cantidades de tareas.
+
 ## Tests
 
 El proyecto incluye una serie de tests para asegurar la calidad y el correcto funcionamiento de las diferentes funcionalidades:
@@ -70,10 +99,6 @@ Para ejecutar un test específico:
 ```
 python manage.py test task_manager.tests.TaskModelTest
 ```
-
-## Contribuciones
-
-Las contribuciones son bienvenidas. Si deseas contribuir, por favor abre un issue o envía un pull request.
 
 ## Licencia
 

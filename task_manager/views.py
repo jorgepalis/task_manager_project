@@ -22,7 +22,7 @@ class TaskListView(View):
         search_query = request.GET.get('search', '')
         if search_query:
             from django.db.models import Q
-            tasks = tasks.filter(Q(title__icontains=search_query) | Q(description__icontains=search_query))
+            tasks = tasks.filter(Q(title__icontains=search_query))
             
         return render(request, 'task_manager/task_list.html', {
             'tasks': tasks,
